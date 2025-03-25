@@ -9,6 +9,8 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
+import { Toaster } from "@/components/ui/sonner"
+
 
 import "./globals.css";
 
@@ -51,6 +53,7 @@ export default async function RootLayout({ children }) {
               {children}
             </SidebarInset>
         </SidebarProvider>)
+        <Toaster />
       </body>
     </html>
   );

@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { get_download_link } from "@/lib/server_funcs"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
+import { set, z } from "zod"
 
 // import { toast } from "@/components/hooks/use-toast"
 import { toast } from "sonner"
@@ -19,6 +19,8 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { Loader2 } from "lucide-react"
+import { useState } from "react"
 
 const FormSchema = z.object({
     url: z.string().url({
@@ -28,6 +30,8 @@ const FormSchema = z.object({
 
 export function InputForm({set_video_data}) {
 
+    const [loading, setLoading] = useState(false);
+
     const form = useForm({
         resolver: zodResolver(FormSchema),
         defaultValues: {
@@ -36,9 +40,9 @@ export function InputForm({set_video_data}) {
     })
 
     async function onSubmit(data) {
-        console.log(data)
+        setLoading(true);
+
         const resp_data = await get_download_link(data["url"]);
-        console.log(resp_data)
         set_video_data(resp_data);
 
         if (resp_data["context"] === "error"){
@@ -49,8 +53,8 @@ export function InputForm({set_video_data}) {
         }
         toast.success("got API response", {
             description: "Extracted video(s) from link",
-        })
-
+        });
+        setLoading(false);
         form.reset();
     }
 
@@ -66,14 +70,24 @@ export function InputForm({set_video_data}) {
                             <FormControl>
                                 <Input placeholder="https://link.to/scrape" {...field} />
                             </FormControl>
-                            <FormDescription>
+                            {/* <FormDescription>
                                 This should be a link for a video to be downloaded
-                            </FormDescription>
+                            </FormDescription> */}
                             <FormMessage />
                         </FormItem>
                     )}
                 />
-                <Button className="cursor-pointer" type="submit">Submit</Button>
+
+                <Button type="submit" disabled={loading}>
+                  {loading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Loading
+                    </>
+                  ) : (
+                    "Submit"
+                  )}
+                </Button>
             </form>
         </Form>
     )

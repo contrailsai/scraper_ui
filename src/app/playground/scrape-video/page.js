@@ -1,6 +1,7 @@
 "use client"
 
 import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { InputForm } from "./form";
 import { Video_content } from "./video_content";
 import { useState } from "react";
@@ -36,10 +37,16 @@ export default function Page() {
 
   return (
     <div className="px-5 py-10">
-      <h1 className=" text-4xl mb-8">
-        Extract video from url
-      </h1>
-      <InputForm set_video_data={set_video_data} />
+      <h1 className="text-3xl font-bold mb-8 text-center">Download Video From Social Media</h1>
+
+      <Card className="mb-8">
+        <CardHeader>
+          <CardTitle>Enter the social media url where the video is in view  </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <InputForm set_video_data={set_video_data} />
+        </CardContent>
+      </Card>
 
       {/* SUPPORTED PLATFORMS */}
       <div className="my-10 border-y-2 pt-2 pb-4 ">
@@ -48,7 +55,7 @@ export default function Page() {
         </h2>
         <div className="flex flex-wrap gap-2">
           {
-            supported_sites.map((val, idx)=>(
+            supported_sites.map((val, idx) => (
               <Badge key={idx}>{val}</Badge>
             ))
           }

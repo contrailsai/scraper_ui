@@ -24,7 +24,7 @@ export function Reel_card({ reel }) {
         try {
             // setStatus('downloading');
             const encodedUrl = encodeURIComponent(reel.is_video ? reel.video_data.url: reel.reel_thumbnail_url);
-            window.location.href = `/api/download_video?url=${encodedUrl}&&filename=${reel.code}.${reel.is_video? "mp4": "jpg"}`;
+            window.location.href = `/nextapi/download_video?url=${encodedUrl}&&filename=${reel.code}.${reel.is_video? "mp4": "jpg"}`;
         } catch (err) {
             console.error('Download failed:', err);
             // setStatus('error');

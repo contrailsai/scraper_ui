@@ -1,9 +1,10 @@
 import { useRef, useState, useEffect } from "react";
+import { Button } from "@/components/ui/button"
+import { Loader2 } from "lucide-react"
 
 export function Video_content({ video_data }) {
     const videoRef = useRef(null);
     const [metadata, setMetadata] = useState({ duration: 0, width: 0, height: 0 });
-    const [status, setStatus] = useState('idle');
 
     useEffect(() => {
         const videoElement = videoRef.current;
@@ -27,12 +28,10 @@ export function Video_content({ video_data }) {
 
     const handleDownload = async () => {
         try {
-            setStatus('downloading');
             const encodedUrl = encodeURIComponent(video_data.data.video_url);
-            window.location.href = `/api/download_video?url=${encodedUrl}&&filename=${video_data.data.filename}`;
+            window.location.href = `/nextapi/download_video?url=${encodedUrl}&&filename=${video_data.data.filename}`;
         } catch (err) {
             console.error('Download failed:', err);
-            setStatus('error');
         }
     };
 
@@ -83,12 +82,9 @@ export function Video_content({ video_data }) {
                             <span className="font-semibold">Resolution:</span> {metadata.width}x{metadata.height}
                         </p>
                     </div>
-                    <div
-                        onClick={handleDownload}
-                        className=" mt-4 px-4 py-2 bg-black text-white rounded-lg hover:opacity-80 cursor-pointer transition-all "
-                    >
-                        {status === 'downloading' ? 'Downloading...' : 'Download Video'}
-                    </div>
+                    <Button onClick={handleDownload} className="mt-4 px-14 py-2 cursor-pointer transition-all">
+                        Download video
+                    </Button>
                 </div>
             </div>
         );

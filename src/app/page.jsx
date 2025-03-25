@@ -10,6 +10,10 @@ import {
 } from "@/components/ui/card"
 import Link from "next/link";
 
+export const metadata = {
+  title: "Contrails | Scraper UI",
+}
+
 export default function Page() {
   return (
     <div className="px-5 pt-5 flex flex-col gap-3">

@@ -84,7 +84,7 @@ const get_user_reels = async (username, count) => {
 
     for(let i=0; i<res_json.length; i++){
         const reel_data = res_json[i]["node"];
-        console.log(reel_data);
+        // console.log(reel_data);
         reels_data.push({
             "code": reel_data["code"],
             "reel_id": reel_data["pk"],
